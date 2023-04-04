@@ -1,9 +1,23 @@
 /// <reference types="cypress"/>
 
+import contrato from '../Contracts/produtos.contracts'
+
 describe('Funcionalidade Manipular Produtos API ServRest', () => {
     let token
     before(() => {
         cy.token('fulano@qa.com', 'teste').then(tkn => { token = tkn })
+    })
+
+
+    it.only('Validar Contrato de Produtos', () => {
+        cy.request({
+            method:'GET',
+            url:'http://localhost:3000/produtos',
+            
+        }).then(response => {
+                return contrato.validateAsync(response.body)
+
+        })
     })
 
 
